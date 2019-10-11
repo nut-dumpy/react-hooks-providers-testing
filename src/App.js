@@ -1,26 +1,41 @@
 import React from 'react';
-import logo from './logo.svg';
+import { MuiThemeProvider, makeStyles } from '@material-ui/core/styles';
+import { Provider } from 'react-redux'
+
+import ThemeChild from './ThemeChild'
+import ReduxChild from './ReduxChild'
+import FullChild from './FullChild'
 import './App.css';
+import store from './redux/store'
+
+export const theme = { label: { spacing: 32 } }
+
+const useStyles = makeStyles({
+	root: {
+		background: '#27485a',
+		display: 'flex',
+		flexDirection: 'column',
+		alignItems: 'center',
+		justifyContent: 'center',
+		margin: 0,
+		height: '100vh'
+	}
+})
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	const classes = useStyles()
+
+	return (
+		<div className={classes.root}>
+			<Provider store={store}>
+				<MuiThemeProvider theme={theme}>
+					<ReduxChild></ReduxChild>
+					<ThemeChild></ThemeChild>
+					<FullChild></FullChild>
+				</MuiThemeProvider>
+			</Provider>
+		</div>
+	);
 }
 
 export default App;
